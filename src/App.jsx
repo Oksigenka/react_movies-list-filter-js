@@ -4,19 +4,14 @@ import { MoviesList } from './components/MoviesList';
 import moviesFromServer from './api/movies.json';
 
 function filtedMovie({ query }) {
-  let preparedMovies = [...moviesFromServer];
   const normalizedQuery = query.trim().toLowerCase();
 
-  if (query) {
-    preparedMovies = preparedMovies.filter(movie => {
-      return (
-        movie.title.toLowerCase().includes(normalizedQuery) ||
-        movie.description.toLowerCase().includes(normalizedQuery)
-      );
-    });
-  }
-
-  return preparedMovies;
+  return moviesFromServer.filter(movie => {
+    return (
+      movie.title.toLowerCase().includes(normalizedQuery) ||
+      movie.description.toLowerCase().includes(normalizedQuery)
+    );
+  });
 }
 
 export const App = () => {
@@ -37,8 +32,8 @@ export const App = () => {
             <div className="control">
               <input
                 value={query}
-                onChange={event => {
-                  setQuery(event.target.value);
+                onChange={changeEvent => {
+                  setQuery(changeEvent.target.value);
                 }}
                 type="text"
                 id="search-query"
@@ -50,7 +45,6 @@ export const App = () => {
         </div>
 
         <MoviesList movies={visibleMovies} />
-        {/* <MoviesList movies={moviesFromServer} /> */}
       </div>
 
       <div className="sidebar">Sidebar goes here</div>
